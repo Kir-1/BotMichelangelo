@@ -4,10 +4,10 @@ from dataclasses import dataclass
 
 @dataclass
 class Config:
-    database_login: str = ""  # это логин для mongodb
-    database_password: str = ""  # это пароль для mongodb
-    database_name: str = ""  # имя базы данных
-    url_connect: str = f"" # ссылка для соединения с базой
+    database_login: str = "Kir-1"  # это логин для mongodb
+    database_password: str = "WhnI78irLr9pifkg"  # это пароль для mongodb
+    url_connect: str = f"mongodb+srv://Kir-1:{database_password}@cluster0.xxveor0.mongodb.net/?retryWrites=true&w" \
+                       f"=majority"  # ссылка для соединения с базой
     bot_token: str = os.getenv('BOT_TOKEN')  # токен бота
     name_bot: str = "t.me/michelangelo_drawer_bot" # имя бота
     url_heroku: str = "https://botmichelangelo.herokuapp.com/"
