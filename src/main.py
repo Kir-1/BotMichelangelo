@@ -24,7 +24,7 @@ async def main() -> None:
     from handlers import dp
     try:
         logging.basicConfig(level=logging.INFO)
-        start_webhook(
+        await start_webhook(
             dispatcher=dp,
             webhook_path=Config.webhook_path,
             skip_updates=True,
