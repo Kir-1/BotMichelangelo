@@ -20,26 +20,25 @@ async def on_shutdown(dispatcher) -> None:
     await bot.delete_webhook()
 
 
-async def main() -> None:
-    from handlers import dp
-    try:
-        logging.basicConfig(level=logging.INFO)
-        await start_webhook(
-            dispatcher=dp,
-            webhook_path=Config.webhook_path,
-            skip_updates=True,
-            on_startup=on_startup,
-            on_shutdown=on_shutdown,
-            host=Config.webapp_host,
-            port=Config.webapp_port,
-        )
-    finally:
-        bot.get_session().close()
+
 
 
 if __name__ == '__main__':
     try:
         print("Bot started")
-        asyncio.run(main())
+        from handlers import dp
+        try:
+            logging.basicConfig(level=logging.INFO)
+            start_webhook(
+                dispatcher=dp,
+                webhook_path=Config.webhook_path,
+                skip_updates=True,
+                on_startup=on_startup,
+                on_shutdown=on_shutdown,
+                host=Config.webapp_host,
+                port=Config.webapp_port,
+            )
+        finally:
+            bot.get_session().close()
     except(KeyboardInterrupt, SystemExit):
         print('Bot stopped!')
