@@ -41,8 +41,6 @@ async def cancel_command(message: types.Message, state: FSMContext) -> None:
         return
 
 
-
-
 # начало регистрации Админа
 @dp.message_handler(Text(equals="Администратор", ignore_case=True), state=None)
 async def start_registration_admin(message: types.Message, state: FSMContext) -> None:
