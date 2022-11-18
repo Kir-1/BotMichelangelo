@@ -18,8 +18,8 @@ async def start_command(message: types.Message) -> None:
         await message.answer("Вы Пользователь")  # добавить возможности пользователю
 
     else:
-        bot.send_message(chat_id=message.from_user.id, text="Вы ещё не зарегистрированы!\n Выберите кто вы.",
-                         reply_markup=get_registration_keyboard())
+        await bot.send_message(chat_id=message.from_user.id, text="Вы ещё не зарегистрированы!\n Выберите кто вы.",
+                               reply_markup=get_registration_keyboard())
 
 
 # выполняется при вызове команды cancel
