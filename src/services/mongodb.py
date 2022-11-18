@@ -1,3 +1,5 @@
+import os
+
 from pymongo import MongoClient
 from pymongo.database import Database
 from src.config import Config
@@ -9,7 +11,7 @@ class AdminsDB:
     cluster: MongoClient = MongoClient(Config.url_connect)  # кластер
     database: Database = cluster["information"]  # база данных
     collection = dict = database["admins"]  # таблица пользователей
-    password: str = "0000" # пароль для получения админки
+    password: str = os.getenv('ADMIN_PASS')  # пароль для получения админки
 
 
 @dataclass
