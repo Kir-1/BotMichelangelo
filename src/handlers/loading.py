@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters import Text
 from src.keyboards.admin_keyboard import get_admin_keyboard
 from src.keyboards.registration_keyboard import get_cancel_keyboard
 from src.main import dp
+from src.services.mongodb import LutDB
 from src.states.state_load_lut import LoadLutState
 
 
@@ -26,6 +27,6 @@ async def load_lut_cube(message: types.Message, state: FSMContext) -> None:
 async def load_lut_cube(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
         data['preview'] = message.photo[0].file_id
-
+        LutDB.collection.insert_one({"lut_file": data['lut_file'], "preview": data['preview']})
     await message.answer("LUT успешно загружен", reply_markup=get_admin_keyboard())
     await state.finish()

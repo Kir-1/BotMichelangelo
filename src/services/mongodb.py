@@ -20,3 +20,9 @@ class UsersDB:
     database: Database = cluster["information"]  # база данных
     collection = dict = database["users"]  # таблица пользователей
 
+
+@dataclass
+class LutDB:
+    cluster: MongoClient = MongoClient(Config.url_connect)  # кластер
+    database: Database = cluster["information"]  # база данных
+    collection = dict = database["LUT"]  # таблица лутов
