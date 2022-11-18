@@ -14,10 +14,10 @@ from src.states.state_registration_admin import AdminRegistrationState
 @dp.message_handler(commands=['start'], state=None)
 async def start_command(message: types.Message) -> None:
     if AdminsDB.collection.find_one({'_id': message.from_user.id}) is not None:
-        await message.answer("Вы Администратор")  # добавить возможности Админу
+        await message.answer("Вы Администратор", reply_markup=get_admin_keyboard())  # добавить возможности Админу
 
     elif UsersDB.collection.find_one({'_id': message.from_user.id}) is not None:
-        await message.answer("Вы Пользователь")  # добавить возможности пользователю
+        await message.answer("Вы Пользователь", reply_markup=get_user_keyboard())  # добавить возможности пользователю
 
     else:
         await bot.send_message(chat_id=message.from_user.id, text="Вы ещё не зарегистрированы!\n Выберите кто вы.",
