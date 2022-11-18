@@ -20,6 +20,7 @@ async def start_load_lut(message: types.Message, state: FSMContext) -> None:
 async def load_lut_cube(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
         data['lut_file'] = message.document.file_id
+    await message.answer("Загрузите превью для LUT", reply_markup=get_cancel_keyboard())
     await LoadLutState.next()
 
 
