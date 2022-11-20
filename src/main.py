@@ -17,7 +17,7 @@ dp = Dispatcher(bot=bot, storage=storage)
 if __name__ == '__main__':
     try:
         print("Bot started")
-        from handlers import dp
+        from handlers import dp, bot
         from handlers.startup_shutdown import on_startup, on_shutdown
 
         try:
