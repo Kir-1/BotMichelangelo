@@ -29,11 +29,11 @@ async def start_command(message: types.Message) -> None:
 async def cancel_command(message: types.Message, state: FSMContext) -> None:
     current_state = await state.get_state()
     if AdminsDB.collection.find_one({'_id': message.from_user.id}) is not None:
-        await message.answer("Вы Администратор")  # добавить возможности Админу
+        await message.answer("Вы Администратор", reply_markup=get_admin_keyboard())  # добавить возможности Админу
         await state.finish()
         return
     elif UsersDB.collection.find_one({'_id': message.from_user.id}) is not None:
-        await message.answer("Вы Пользователь")  # добавить возможности пользователю
+        await message.answer("Вы Пользователь", reply_markup=get_user_keyboard())  # добавить возможности пользователю
         await state.finish()
         return
     elif current_state is None:
@@ -61,6 +61,6 @@ async def check_password(message: types.Message, state: FSMContext) -> None:
 
 # начало регистрации Пользователя
 @dp.message_handler(Text(equals="Пользователь", ignore_case=True), state=None)
-async def start_registration_admin(message: types.Message, state: FSMContext) -> None:
+async def start_registration_user(message: types.Message, state: FSMContext) -> None:
     UsersDB.collection.insert_one({"_id": message.from_user.id, "_username": message.from_user.username})
     await message.answer("Вы Пользователь", reply_markup=get_user_keyboard())  # добавить возможности Админу

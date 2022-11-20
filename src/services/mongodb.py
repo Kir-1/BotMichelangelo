@@ -3,6 +3,7 @@ import os
 from pymongo import MongoClient
 from pymongo.database import Database
 from src.config import Config
+#from src.config_test import ConfigTest
 from dataclasses import dataclass
 
 
@@ -26,3 +27,5 @@ class LutDB:
     cluster: MongoClient = MongoClient(Config.url_connect)  # кластер
     database: Database = cluster["information"]  # база данных
     collection = dict = database["LUT"]  # таблица лутов
+
+
