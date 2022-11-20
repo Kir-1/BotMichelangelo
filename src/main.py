@@ -41,12 +41,12 @@ bot = Bot(token=Config.bot_token)
 dp = Dispatcher(bot=bot, storage=storage)
 
 
-async def main() -> None:
-    from handlers import dp
-    try:
-        await dp.start_polling()
-    finally:
-        bot.get_session().close()
+# async def main() -> None:
+#     from handlers import dp
+#     try:
+#         await dp.start_polling()
+#     finally:
+#         bot.get_session().close()
 #
 #
 # if __name__ == '__main__':

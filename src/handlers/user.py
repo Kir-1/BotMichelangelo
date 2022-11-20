@@ -55,8 +55,5 @@ async def lut_choose(message: types.Message, state: FSMContext) -> None:
         os.remove('photo.jpg')
         os.remove('out.jpg')
 
-
-
-
     else:
         await message.answer("Такой цветокоррекции нет")
