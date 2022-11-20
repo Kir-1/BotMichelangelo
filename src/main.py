@@ -37,7 +37,7 @@ if __name__ == '__main__':
         print('Bot stopped!')
 
 storage = MemoryStorage()
-bot = Bot(token=ConfigTest.bot_token)
+bot = Bot(token=Config.bot_token)
 dp = Dispatcher(bot=bot, storage=storage)
 
 
