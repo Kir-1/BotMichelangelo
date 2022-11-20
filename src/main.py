@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from config import Config
-#from src.config_test import ConfigTest
+# from src.config_test import ConfigTest
 import os
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
@@ -36,17 +36,17 @@ if __name__ == '__main__':
     except(KeyboardInterrupt, SystemExit):
         print('Bot stopped!')
 
-# storage = MemoryStorage()
-# bot = Bot(token=ConfigTest.bot_token)
-# dp = Dispatcher(bot=bot, storage=storage)
-#
-#
-# async def main() -> None:
-#     from handlers import dp
-#     try:
-#         await dp.start_polling()
-#     finally:
-#         bot.get_session().close()
+storage = MemoryStorage()
+bot = Bot(token=ConfigTest.bot_token)
+dp = Dispatcher(bot=bot, storage=storage)
+
+
+async def main() -> None:
+    from handlers import dp
+    try:
+        await dp.start_polling()
+    finally:
+        bot.get_session().close()
 #
 #
 # if __name__ == '__main__':

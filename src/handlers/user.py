@@ -1,10 +1,14 @@
+import os.path
 import typing
 
 import pillow_lut
+from PIL import Image
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
+from aiogram.types.input_file import InputFile
 
+from src import config_test
 from src.keyboards.admin_keyboard import get_admin_keyboard
 from src.keyboards.registration_keyboard import get_cancel_keyboard
 from src.main import dp
@@ -23,7 +27,7 @@ async def start_color_correction(message: types.Message, state: FSMContext) -> N
 @dp.message_handler(content_types=['photo'], state=ColorCorrectionState.photo)
 async def photo_choose(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
-        data['photo'] = message.photo[0].file_id
+        data['photo'] = message.photo[-1].file_id
 
     for element in LutDB.collection.find().sort('_id', 1):
         await bot.send_photo(message.from_user.id, photo=element['preview'], caption=element['_id'])
@@ -35,10 +39,24 @@ async def photo_choose(message: types.Message, state: FSMContext) -> None:
 async def lut_choose(message: types.Message, state: FSMContext) -> None:
     element_db = LutDB.collection.find_one({"_id": int(message.text)})
     if element_db is not None:
-        file = await bot.get_file(element_db['lut_file'])
-        file_path = file.file_path
-        result = await bot.download_file(file_path, "lut.cube")
-        a = pillow_lut.load_cube_file('lut.cube')
-        print(a)
+        async with state.proxy() as data:
+            file_photo = await bot.get_file(data['photo'])
+            await bot.download_file(file_photo.file_path, 'photo.jpg')
+
+        file_lut = await bot.get_file(element_db['lut_file'])
+        file_path_lut = file_lut.file_path
+        await bot.download_file(file_path_lut, "lut.cube")
+        lut = pillow_lut.load_cube_file('lut.cube')
+        Image.open('photo.jpg').filter(lut).save('out.jpg')
+        photo = InputFile("out.jpg")
+        await bot.send_photo(chat_id=message.from_user.id, photo=photo, caption="Готово!!")
+
+        os.remove('lut.cube')
+        os.remove('photo.jpg')
+        os.remove('out.jpg')
+
+
+
+
     else:
         await message.answer("Такой цветокоррекции нет")
